@@ -3,7 +3,7 @@ version: "3.8"
 services:
   # Playwright Browser 1 (Port 9222)
   playwright-browser-1:
-    image: mcr.microsoft.com/playwright:v1.57.0-jammy
+    image: mcr.microsoft.com/playwright:v1.58.1-jammy
     container_name: playwright-browser-1
     restart: unless-stopped
     ports:
@@ -20,7 +20,7 @@ services:
 
   # Playwright Browser 2 (Port 9223)
   # playwright-browser-2:
-  #   image: mcr.microsoft.com/playwright:v1.57.0-jammy
+  #   image: mcr.microsoft.com/playwright:v1.58.1-jammy
   #   container_name: playwright-browser-2
   #   restart: unless-stopped
   #   ports:

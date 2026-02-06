@@ -35,18 +35,14 @@ docker ps -a
 docker-compose down
 docker stop playwright-browser-1
 docker stop playwright-browser-2
-docker stop uptime-worker
-docker stop uptime-redis
 docker rm playwright-browser-1
 docker rm playwright-browser-2
-docker rm uptime-worker
-docker rm uptime-redis
 docker system prune -a --volumes --force
 
 # Ports Setup
 sudo ufw status
-sudo ufw allow 9222
-sudo ufw allow 9223
+sudo ufw deny 9222
+sudo ufw deny 9223
 sudo ufw enable
 
 ```
@@ -69,9 +65,11 @@ docker-compose logs -f
 
 # Test nginx configuration
 sudo nginx -t
+sudo certbot --nginx -d playwright-browser-1.uptimelead.com
+sudo certbot --nginx -d playwright-browser-2.uptimelead.com
 # Reload Nginx
 cd ..
-cd etc/nginx/site-available
+cd etc/nginx/sites-available
 sudo systemctl reload nginx
 
 ```
@@ -79,6 +77,7 @@ sudo systemctl reload nginx
 # Setup HTTP Basic Authentication
 
 ```bash
+
 # 1. Create htpasswd files for each browser
 
 # For Browser 1 (staging-browser.uptimelead.com)

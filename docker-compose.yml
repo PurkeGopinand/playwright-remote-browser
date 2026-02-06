@@ -1,0 +1,44 @@
+version: "3.8"
+
+services:
+  # Playwright Browser 1 (Port 9222)
+  playwright-browser-1:
+    image: mcr.microsoft.com/playwright:v1.57.0-jammy
+    container_name: playwright-browser-1
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:9222:3000"
+    command: npx playwright run-server --port 3000
+    networks:
+      - playwright-browser-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # Playwright Browser 2 (Port 9223)
+  # playwright-browser-2:
+  #   image: mcr.microsoft.com/playwright:v1.57.0-jammy
+  #   container_name: playwright-browser-2
+  #   restart: unless-stopped
+  #   ports:
+  #     - "9223:3000"
+  #   command: npx playwright run-server --port 3000
+  #   networks:
+  #     - playwright-browser-network
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "http://localhost:3000"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 3
+  #     start_period: 10s
+
+networks:
+  playwright-browser-network:
+    driver: bridge
+
+volumes:
+  redis-data:
+    driver: local
